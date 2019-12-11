@@ -3,14 +3,14 @@
 namespace App\Http\Controllers\API;
 
 use Illuminate\Http\Request;
-use App\Pizza;
+use App\Food;
 use App\Http\Controllers\API\BaseController as BaseController;
 use Validator;
 use Illuminate\Validation\Rule;
-use App\Http\Resources\Pizza as PizzaResource;
-use App\Http\Resources\PizzaCollection as PizzasResource;
+use App\Http\Resources\Food as FoodResource;
+use App\Http\Resources\FoodCollection as FoodsResource;
 
-class PizzaController extends BaseController
+class FoodController extends BaseController
 {
     /**
      * Display a listing of the resource.
@@ -19,8 +19,8 @@ class PizzaController extends BaseController
      */
     public function index()
     {
-        $pizza = Pizza::all();
-        return $this->sendResponse(new PizzasResource($pizza), 'Pizzas retrieved successfully.');
+        $food = Food::all();
+        return $this->sendResponse(new FoodsResource($food), 'Foods retrieved successfully.');
     }
 
     /**
@@ -34,11 +34,12 @@ class PizzaController extends BaseController
         $input = $request->all();
 
         $validator = Validator::make($input, [
-            'name' => 'required|unique:pizzas|max:250',
+            'name' => 'required|unique:App\Food|max:250',
             'size' => [
                 'required',
                 Rule::in(['small', 'medium', 'big']),
             ],
+            'category' => 'required|exists:App\FoodCategory,id',
             'price' => 'required',
             'description' => 'max:512'
         ]);
@@ -47,9 +48,9 @@ class PizzaController extends BaseController
             return $this->sendError('Validation Error.', $validator->errors());
         }
 
-        $pizza = Pizza::create($input);
+        $food = Food::create($input);
 
-        return $this->sendResponse(new PizzaResource($pizza), 'Pizza created successfully.');
+        return $this->sendResponse(new FoodResource($food), 'Food created successfully.');
     }
 
     /**
@@ -58,13 +59,13 @@ class PizzaController extends BaseController
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(Pizza $pizza)
+    public function show(Food $food)
     {
-        if (is_null($pizza)) {
-            return $this->sendError('Pizza not found.');
+        if (is_null($food)) {
+            return $this->sendError('Food not found.');
         }
 
-        return $this->sendResponse(new PizzaResource($pizza), 'Pizza retrieved successfully.');
+        return $this->sendResponse(new FoodResource($food), 'Food retrieved successfully.');
     }
 
     /**
@@ -74,12 +75,12 @@ class PizzaController extends BaseController
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Pizza $pizza)
+    public function update(Request $request, Food $food)
     {
         $input = $request->all();
 
         $validator = Validator::make($input, [
-            'name' => 'required|unique:pizzas|max:250',
+            'name' => 'required|unique:foods|max:250',
             'price' => 'required',
             'size' => [
                 Rule::in(['small', 'medium', 'big']),
@@ -91,13 +92,13 @@ class PizzaController extends BaseController
             return $this->sendError('Validation Error.', $validator->errors());
         }
 
-        $pizza->name = $input['name'];
-        $pizza->size = $input['size'];
-        $pizza->price = $input['price'];
-        $pizza->description = $input['description'];
-        $pizza->save();
+        $food->name = $input['name'];
+        $food->size = $input['size'];
+        $food->price = $input['price'];
+        $food->description = $input['description'];
+        $food->save();
 
-        return $this->sendResponse(new PizzaResource($pizza), 'Pizza updated successfully.');
+        return $this->sendResponse(new FoodResource($food), 'Food updated successfully.');
     }
 
     /**
@@ -106,10 +107,10 @@ class PizzaController extends BaseController
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Pizza $pizza)
+    public function destroy(Food $food)
     {
-        $pizza->delete();
+        $food->delete();
 
-        return $this->sendResponse([], 'Pizza deleted successfully.');
+        return $this->sendResponse([], 'Food deleted successfully.');
     }
 }

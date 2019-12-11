@@ -2,14 +2,14 @@
 
 namespace App\Http\Controllers\API;
 
-use Illuminate\Http\Request;
-use App\Table;
 use App\Http\Controllers\API\BaseController as BaseController;
+use App\FoodCategory;
 use Validator;
-use App\Http\Resources\Table as TableResource;
-use App\Http\Resources\TableCollection as TablesResource;
+use Illuminate\Validation\Rule;
+use App\Http\Resources\FoodCategory as FoodCategoryResource;
+use App\Http\Resources\FoodCategoryCollection as FoodCategoriesResource;
 
-class TableController extends BaseController
+class FoodCategoryController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -18,8 +18,8 @@ class TableController extends BaseController
      */
     public function index()
     {
-        $table = Table::all();
-        return $this->sendResponse(new TablesResource($table), 'Tables retrieved successfully.');
+        $categories = FoodCategory::all();
+        return $this->sendResponse(new FoodCategoriesResource($categories), 'categories retrieved successfully.');
     }
 
     /**
@@ -29,20 +29,20 @@ class TableController extends BaseController
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
-    {
+     {
         $input = $request->all();
 
         $validator = Validator::make($input, [
-            'name' => 'required|unique:tables'
+            'name' => 'required|unique:App\FoodCategory|max:250'
         ]);
 
         if ($validator->fails()) {
             return $this->sendError('Validation Error.', $validator->errors());
         }
 
-        $table = Table::create($input);
+        $category = FoodCategory::create($input);
 
-        return $this->sendResponse(new TableResource($table), 'Table created successfully.');
+        return $this->sendResponse(new FoodCategoryResource($category), 'Category created successfully.');
     }
 
     /**
@@ -51,15 +51,13 @@ class TableController extends BaseController
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(FoodCategory $category)
     {
-        $table = Table::find($id);
-
-        if (is_null($table)) {
-            return $this->sendError('Table not found.');
+        if (is_null($category)) {
+            return $this->sendError('Category not found.');
         }
 
-        return $this->sendResponse(new TableResource($table), 'Table retrieved successfully.');
+        return $this->sendResponse(new FoodCategoryResource($category), 'Category retrieved successfully.');
     }
 
     /**
@@ -69,25 +67,21 @@ class TableController extends BaseController
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-
-    public function update(Request $request, Table $table)
+    public function update(Request $request, FoodCategory $category)
     {
         $input = $request->all();
 
         $validator = Validator::make($input, [
-            'name' => 'required|max:256|string',
-            'chairs' => 'required|integer',
-            'description' => 'max:512|string|nullable'
+            'name' => 'required|unique:App\FoodCategory|max:250'
         ]);
 
         if ($validator->fails()) {
             return $this->sendError('Validation Error.', $validator->errors());
         }
 
-        $table->name = $input['name'];
-        $table->save();
+        $category->save($input);
 
-        return $this->sendResponse(new TableResource($table), 'Table updated successfully.');
+        return $this->sendResponse(new FoodCategoryResource($category), 'Category updated successfully.');
     }
 
     /**
@@ -96,10 +90,10 @@ class TableController extends BaseController
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Table $table)
+    public function destroy(FoodCategory $category)
     {
-        $table->delete();
+        $category->delete();
 
-        return $this->sendResponse([], 'Table deleted successfully.');
+        return $this->sendResponse([], 'Category deleted successfully.');
     }
 }
