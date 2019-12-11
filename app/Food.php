@@ -12,6 +12,12 @@ class Food extends Model
         'name',
         'size',
         'price',
-        'description'
+        'description',
+        'category'
     ];
+
+    public function category()
+    {
+        return $this->hasOne('App\FoodCategory');
+    }
 }
