@@ -33,7 +33,9 @@ class TableController extends BaseController
         $input = $request->all();
 
         $validator = Validator::make($input, [
-            'name' => 'required|unique:tables'
+            'name' => 'required|max:256|string',
+            'chairs' => 'required|integer',
+            'description' => 'max:512|string|nullable'
         ]);
 
         if ($validator->fails()) {
@@ -84,8 +86,7 @@ class TableController extends BaseController
             return $this->sendError('Validation Error.', $validator->errors());
         }
 
-        $table->name = $input['name'];
-        $table->save();
+        $table->save($input);
 
         return $this->sendResponse(new TableResource($table), 'Table updated successfully.');
     }

@@ -14,3 +14,7 @@
 Route::get('/', function () {
     return view('welcome');
 });
+
+Route::resource('tables','Web\TableController');
+Route::resource('foodcategories','Web\FoodCategoryController');
+Route::resource('foods','Web\FoodController');
