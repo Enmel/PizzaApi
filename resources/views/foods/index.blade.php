@@ -34,7 +34,7 @@
             <td>{{ $food->name }}</td>
             <td>{{ $food->description }}</td>
             <td>{{ $food->size }}</td>
-            <td>{{ $food->category }}</td>
+            <td>{{ $food->categorydata->name }}</td>
             <td>{{ $food->price }}</td>
             <td>
                 <form action="{{ route('foods.destroy', $food->id) }}" method="POST"> 

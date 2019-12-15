@@ -16,8 +16,8 @@ class Food extends Model
         'category'
     ];
 
-    public function category()
+    public function categorydata()
     {
-        return $this->hasOne('App\FoodCategory');
+        return $this->belongsTo('App\FoodCategory', 'category'); //el segundo parametro es el campo de este modelo que se usa como llave foranea
     }
 }
