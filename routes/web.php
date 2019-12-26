@@ -18,3 +18,6 @@ Route::get('/', function () {
 Route::resource('tables','Web\TableController');
 Route::resource('foodcategories','Web\FoodCategoryController');
 Route::resource('foods','Web\FoodController');
+Route::get('/orders/{order}/paidout', 'Web\OrderController@paidout')->name('orders.paidout');
+Route::get('/orders/{order}/status', 'Web\OrderController@status')->name('orders.status');
+Route::resource('orders','Web\OrderController');

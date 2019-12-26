@@ -9,7 +9,7 @@ use Illuminate\Validation\Rule;
 use App\Http\Resources\FoodCategory as FoodCategoryResource;
 use App\Http\Resources\FoodCategoryCollection as FoodCategoriesResource;
 
-class FoodCategoryController extends Controller
+class FoodCategoryController extends BaseController
 {
     /**
      * Display a listing of the resource.
