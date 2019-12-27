@@ -22,8 +22,10 @@ class OrderController extends BaseController
      */
     public function index()
     {
-        $orders = Order::all();
-        return $this->sendResponse(new OrdersResource($orders), 'Orders retrieved successfully.');
+        $user_id = Auth::id();
+        $orders = Order::where('user_id', $user_id)->paginate(15);
+
+        return new OrdersResource($orders);
     }
 
     /**
@@ -79,42 +81,10 @@ class OrderController extends BaseController
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Order $order)
     {
-        $table = Table::find($id);
 
-        if (is_null($table)) {
-            return $this->sendError('Table not found.');
-        }
-
-        return $this->sendResponse(new TableResource($table), 'Table retrieved successfully.');
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-
-    public function update(Request $request, Table $table)
-    {
-        $input = $request->all();
-
-        $validator = Validator::make($input, [
-            'name' => 'required|max:256|string',
-            'chairs' => 'required|integer',
-            'description' => 'max:512|string|nullable'
-        ]);
-
-        if ($validator->fails()) {
-            return $this->sendError('Validation Error.', $validator->errors());
-        }
-
-        $table->save($input);
-
-        return $this->sendResponse(new TableResource($table), 'Table updated successfully.');
+        return $this->sendResponse(new OrderResource($order), 'Order retrieved successfully.');
     }
 
     /**
@@ -123,10 +93,10 @@ class OrderController extends BaseController
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Table $table)
+    public function destroy(Order $order)
     {
-        $table->delete();
+        $order->delete();
 
-        return $this->sendResponse([], 'Table deleted successfully.');
+        return $this->sendResponse([], 'Order deleted successfully.');
     }
 }

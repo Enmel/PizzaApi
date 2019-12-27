@@ -14,6 +14,15 @@ class OrderDetail extends JsonResource
      */
     public function toArray($request)
     {
-        return parent::toArray($request);
+        return [
+            'detail' => $this->id,
+            'food' => [
+                'id' => $this->food_id,
+                'name' => $this->food->name,
+                'price' => $this->food->price
+            ],
+            'quantity' => $this->quantity,
+            'subtotal' => $this->quantity * $this->food->price
+        ];
     }
 }
