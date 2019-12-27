@@ -19,48 +19,11 @@ class OrderController extends Controller
             ->with('i', (request()->input('page', 1) - 1) * 5);
     }
    
-    public function create()
+    public function show(Order $order)
     {
-        $categories = FoodCategory::all();
-        return view('foods.create', compact('categories'));
-    }
-  
-    public function store(Request $request)
-    {
-        $request->validate([
-            'name' => 'required|unique:App\Food|max:250',
-            'size' => [
-                'required',
-                Rule::in(['small', 'medium', 'big']),
-            ],
-            'category' => 'required|exists:App\FoodCategory,id',
-            'price' => 'required',
-            'description' => 'max:512'
-        ]);
-  
-        Food::create($request->all());
-   		
-        return redirect()->route('foods.index')->with('success', 'Food Created Successfully!');
+        return view('orders.show', compact('order'));
     }
    
-    public function show(Food $food)
-    {
-        return view('foods.show',compact('food'));
-    }
-   
-    public function edit(Food $food)
-    {
-        $categories = FoodCategory::all();
-        return view('foods.edit',compact(['food', 'categories']));
-    }
-
-    public function update(Order $order)
-    {
-        var_dump($order);
-        exit;
-        return redirect()->route('foods.index')->with('success', 'Food Created Successfully!');
-    }
-
     public function paidout(Order $order)
     {
     	$order->paidout = (integer)!$order->paidout;
@@ -88,7 +51,7 @@ class OrderController extends Controller
     {
         $order->delete();
   
-        return redirect()->route('order.index')
+        return redirect()->route('orders.index')
                         ->with('success','Order deleted successfully');
     }
 }

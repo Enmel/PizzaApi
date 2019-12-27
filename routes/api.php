@@ -20,7 +20,6 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 Route::prefix('v1')->group(function () {
 
     Route::post('login', 'Api\AuthController@login');
-
     Route::post('register', 'Api\AuthController@register');
 
     Route::group(['middleware' => 'auth:api'], function () {
@@ -28,5 +27,6 @@ Route::prefix('v1')->group(function () {
         Route::apiResource('tables', 'Api\TableController');
         Route::apiResource('foods', 'Api\FoodController');
         Route::apiResource('categories', 'Api\FoodCategoryController');
+        Route::apiResource('orders', 'Api\OrderController');
     });
 });

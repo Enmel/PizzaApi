@@ -6,9 +6,6 @@
             <div class="pull-left">
                 <a class="btn btn-info" href="{{ url('/') }}">Back</a>
             </div>
-            <div class="pull-right">
-                <a class="btn btn-success" href="{{ route('orders.create') }}"> Create New Order</a>
-            </div>
         </div>
     </div>
    
@@ -22,6 +19,7 @@
         <tr>
             <th>No</th>
             <th>Nombre</th>
+            <th>Fecha</th>
             <th>Pagado</th>
             <th>Status</th>
             <th>Total</th>
@@ -31,6 +29,7 @@
         <tr>
             <td>{{ ++$i }}</td>
             <td>{{ $order->user->name }}</td>
+            <td>{{ $order->created_at }}</td>
             @if ($order->paidout == 0)
                 <td><a href="{{ route('orders.paidout', $order->id) }}" class="badge badge-warning">Pendiente</a></td>
             @else
@@ -44,7 +43,7 @@
             <td>{{$order->details->sum('total')}}</td>
             <td>
                 <form action="{{ route('orders.destroy', $order->id) }}" method="POST"> 
-                    <a class="btn btn-primary" href="{{ route('orders.edit', $order->id) }}">Edit</a>
+                    <a class="btn btn-primary" href="{{ route('orders.show', $order->id) }}">Show</a>
    
                     @csrf
                     @method('DELETE')
