@@ -1,8 +1,8 @@
-#Requisitos
+### Requisitos
 
 Php > 7.1
 
-#Instalacion
+### Instalacion
 
 `git clone https://github.com/Enmel/PizzaApi`
 
@@ -10,7 +10,7 @@ Php > 7.1
 
 `php artisan passport:install`
 
-#TODOS (Release de Arturo)
+### TODOS (Release de Arturo)
 
 * Sistema de Reservacion de Mesa
     * Api
@@ -23,3 +23,4 @@ Php > 7.1
     * Users (admin)
 * Agregar la documentacion con Swagger
 * Agregar Gates para las autorizaciones de usuarios
+* Integracion con MailGun
