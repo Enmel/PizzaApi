@@ -8,6 +8,11 @@ use Validator;
 use Illuminate\Validation\Rule;
 use App\Http\Resources\FoodCategory as FoodCategoryResource;
 use App\Http\Resources\FoodCategoryCollection as FoodCategoriesResource;
+//Spatie uses
+use Spatie\QueryBuilder\QueryBuilder;
+use Spatie\QueryBuilder\AllowedFilter;
+use Spatie\QueryBuilder\Exceptions\InvalidFilterQuery;
+use Spatie\QueryBuilder\Exceptions\InvalidSortQuery;
 
 class FoodCategoryController extends BaseController
 {
@@ -19,30 +24,20 @@ class FoodCategoryController extends BaseController
     public function index()
     {
         $categories = FoodCategory::all();
-        return $this->sendResponse(new FoodCategoriesResource($categories), 'categories retrieved successfully.');
-    }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-     {
-        $input = $request->all();
+        try {
+            $categories = QueryBuilder::for(FoodCategory::class)
+            ->allowedFilters(['name'])
+            ->defaultSort('id')
+            ->allowedSorts('name', 'created_at')
+            ->paginate(15)
+            ->appends(request()->query());
 
-        $validator = Validator::make($input, [
-            'name' => 'required|unique:App\FoodCategory|max:250'
-        ]);
-
-        if ($validator->fails()) {
-            return $this->sendError('Validation Error.', $validator->errors());
+        }catch(InvalidFilterQuery $e){
+            return $this->sendError('Filtro invalido', $e->getMessage());
         }
 
-        $category = FoodCategory::create($input);
-
-        return $this->sendResponse(new FoodCategoryResource($category), 'Category created successfully.');
+        return new FoodCategoriesResource($categories);
     }
 
     /**
@@ -57,43 +52,6 @@ class FoodCategoryController extends BaseController
             return $this->sendError('Category not found.');
         }
 
-        return $this->sendResponse(new FoodCategoryResource($category), 'Category retrieved successfully.');
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, FoodCategory $category)
-    {
-        $input = $request->all();
-
-        $validator = Validator::make($input, [
-            'name' => 'required|unique:App\FoodCategory|max:250'
-        ]);
-
-        if ($validator->fails()) {
-            return $this->sendError('Validation Error.', $validator->errors());
-        }
-
-        $category->save($input);
-
-        return $this->sendResponse(new FoodCategoryResource($category), 'Category updated successfully.');
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(FoodCategory $category)
-    {
-        $category->delete();
-
-        return $this->sendResponse([], 'Category deleted successfully.');
+        return new FoodCategoryResource($category);
     }
 }

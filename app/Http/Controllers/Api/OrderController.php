@@ -12,6 +12,11 @@ use Validator;
 use Illuminate\Validation\Rule;
 use App\Http\Resources\Order as OrderResource;
 use App\Http\Resources\OrderCollection as OrdersResource;
+//Spatie uses
+use Spatie\QueryBuilder\QueryBuilder;
+use Spatie\QueryBuilder\AllowedFilter;
+use Spatie\QueryBuilder\Exceptions\InvalidFilterQuery;
+use Spatie\QueryBuilder\Exceptions\InvalidSortQuery;
 
 class OrderController extends BaseController
 {
@@ -23,7 +28,19 @@ class OrderController extends BaseController
     public function index()
     {
         $user_id = Auth::id();
-        $orders = Order::where('user_id', $user_id)->paginate(15);
+        try {
+            $orders = QueryBuilder::for(Order::where('user_id', $user_id))
+            ->allowedFilters([AllowedFilter::exact('status'), AllowedFilter::exact('paidout'), AllowedFilter::exact('type')])
+            ->defaultSort('id')
+            ->allowedSorts('created_at')
+            ->paginate(15)
+            ->appends(request()->query());
+
+        }catch(InvalidFilterQuery $e){
+            return $this->sendError('Filtro invalido', $e->getMessage());
+        }catch(InvalidSortQuery $e){
+            return $this->sendError('Sort invalido', $e->getMessage());
+        }
 
         return new OrdersResource($orders);
     }
@@ -72,7 +89,7 @@ class OrderController extends BaseController
         }
 
 
-        return $this->sendResponse(new OrderResource($order), 'Orden created successfully.');
+        return new OrderResource($order);
     }
 
     /**
@@ -84,7 +101,7 @@ class OrderController extends BaseController
     public function show(Order $order)
     {
 
-        return $this->sendResponse(new OrderResource($order), 'Order retrieved successfully.');
+        return new OrderResource($order);
     }
 
     /**

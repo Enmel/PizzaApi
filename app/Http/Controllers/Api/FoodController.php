@@ -9,6 +9,11 @@ use Validator;
 use Illuminate\Validation\Rule;
 use App\Http\Resources\Food as FoodResource;
 use App\Http\Resources\FoodCollection as FoodsResource;
+//Spatie uses
+use Spatie\QueryBuilder\QueryBuilder;
+use Spatie\QueryBuilder\AllowedFilter;
+use Spatie\QueryBuilder\Exceptions\InvalidFilterQuery;
+use Spatie\QueryBuilder\Exceptions\InvalidSortQuery;
 
 class FoodController extends BaseController
 {
@@ -19,38 +24,21 @@ class FoodController extends BaseController
      */
     public function index()
     {
-        $food = Food::all();
-        return $this->sendResponse(new FoodsResource($food), 'Foods retrieved successfully.');
-    }
+        try{
+            $foods = QueryBuilder::for(Food::class)
+            ->allowedFilters(['name', AllowedFilter::exact('size'), AllowedFilter::exact('category')])
+            ->defaultSort('id')
+            ->allowedSorts('name', 'price')
+            ->paginate(15)
+            ->appends(request()->query());
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        $input = $request->all();
-
-        $validator = Validator::make($input, [
-            'name' => 'required|unique:App\Food|max:250',
-            'size' => [
-                'required',
-                Rule::in(['small', 'medium', 'big']),
-            ],
-            'category' => 'required|exists:App\FoodCategory,id',
-            'price' => 'required',
-            'description' => 'max:512'
-        ]);
-
-        if ($validator->fails()) {
-            return $this->sendError('Validation Error.', $validator->errors());
+        }catch(InvalidFilterQuery $e){
+            return $this->sendError('Filtro invalido', $e->getMessage());
+        }catch(InvalidSortQuery $e){
+            return $this->sendError('Sort invalido', $e->getMessage());
         }
 
-        $food = Food::create($input);
-
-        return $this->sendResponse(new FoodResource($food), 'Food created successfully.');
+        return new FoodsResource($foods);
     }
 
     /**
@@ -65,52 +53,6 @@ class FoodController extends BaseController
             return $this->sendError('Food not found.');
         }
 
-        return $this->sendResponse(new FoodResource($food), 'Food retrieved successfully.');
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, Food $food)
-    {
-        $input = $request->all();
-
-        $validator = Validator::make($input, [
-            'name' => 'required|unique:foods|max:250',
-            'price' => 'required',
-            'size' => [
-                Rule::in(['small', 'medium', 'big']),
-            ],
-            'description' => 'required|max:512'
-        ]);
-
-        if ($validator->fails()) {
-            return $this->sendError('Validation Error.', $validator->errors());
-        }
-
-        $food->name = $input['name'];
-        $food->size = $input['size'];
-        $food->price = $input['price'];
-        $food->description = $input['description'];
-        $food->save();
-
-        return $this->sendResponse(new FoodResource($food), 'Food updated successfully.');
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(Food $food)
-    {
-        $food->delete();
-
-        return $this->sendResponse([], 'Food deleted successfully.');
+        return new FoodResource($food);
     }
 }

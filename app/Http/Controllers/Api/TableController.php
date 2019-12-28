@@ -8,6 +8,11 @@ use App\Http\Controllers\API\BaseController as BaseController;
 use Validator;
 use App\Http\Resources\Table as TableResource;
 use App\Http\Resources\TableCollection as TablesResource;
+//Spatie uses
+use Spatie\QueryBuilder\QueryBuilder;
+use Spatie\QueryBuilder\AllowedFilter;
+use Spatie\QueryBuilder\Exceptions\InvalidFilterQuery;
+use Spatie\QueryBuilder\Exceptions\InvalidSortQuery;
 
 class TableController extends BaseController
 {
@@ -18,33 +23,21 @@ class TableController extends BaseController
      */
     public function index()
     {
-        $table = Table::all();
-        return $this->sendResponse(new TablesResource($table), 'Tables retrieved successfully.');
-    }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        $input = $request->all();
+        try {
 
-        $validator = Validator::make($input, [
-            'name' => 'required|max:256|string',
-            'chairs' => 'required|integer',
-            'description' => 'max:512|string|nullable'
-        ]);
+            $tables = QueryBuilder::for(Table::class)
+            ->allowedFilters([AllowedFilter::scope( 'available_seats','has_seats'), 'name'])
+            ->defaultSort('id')
+            ->allowedSorts('chairs')
+            ->paginate(15)
+            ->appends(request()->query());
 
-        if ($validator->fails()) {
-            return $this->sendError('Validation Error.', $validator->errors());
+        }catch(InvalidFilterQuery $e){
+            return $this->sendError('Filtro invalido', $e->getMessage());
         }
 
-        $table = Table::create($input);
-
-        return $this->sendResponse(new TableResource($table), 'Table created successfully.');
+        return new TablesResource($tables);
     }
 
     /**
@@ -61,46 +54,7 @@ class TableController extends BaseController
             return $this->sendError('Table not found.');
         }
 
-        return $this->sendResponse(new TableResource($table), 'Table retrieved successfully.');
+        return new TableResource($table);
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-
-    public function update(Request $request, Table $table)
-    {
-        $input = $request->all();
-
-        $validator = Validator::make($input, [
-            'name' => 'required|max:256|string',
-            'chairs' => 'required|integer',
-            'description' => 'max:512|string|nullable'
-        ]);
-
-        if ($validator->fails()) {
-            return $this->sendError('Validation Error.', $validator->errors());
-        }
-
-        $table->save($input);
-
-        return $this->sendResponse(new TableResource($table), 'Table updated successfully.');
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(Table $table)
-    {
-        $table->delete();
-
-        return $this->sendResponse([], 'Table deleted successfully.');
-    }
 }
