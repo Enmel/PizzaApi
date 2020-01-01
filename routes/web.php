@@ -21,3 +21,5 @@ Route::resource('foods','Web\FoodController');
 Route::get('/orders/{order}/paidout', 'Web\OrderController@paidout')->name('orders.paidout');
 Route::get('/orders/{order}/status', 'Web\OrderController@status')->name('orders.status');
 Route::resource('orders','Web\OrderController');
+Route::get('/reservations/{reservation}/status', 'Web\ReservationController@status')->name('reservations.status');
+Route::resource('reservations','Web\ReservationController');
