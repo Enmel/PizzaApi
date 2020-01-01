@@ -18,9 +18,9 @@ php artisan passport:install
 
 ### TODOS (Release de Arturo)
 
-* Sistema de Reservacion de Mesa
-    * Api
-    * Vistas de admin
+* ~Sistema de Reservacion de Mesa~
+    * ~Api~
+    * ~Vistas de admin~
 * ~Integrar el api y los recursos con el paquete spatie/laravel-query-builder~
     * ~Food~
     * ~Categories~
