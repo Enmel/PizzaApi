@@ -27,7 +27,11 @@ class FoodCategoryController extends Controller
             'name' => 'required|max:256|string'
         ]);
   
-        FoodCategory::create($request->all());
+        $category = FoodCategory::create($request->all());
+
+        if($request->hasFile('image')){
+            $category->addMediaFromRequest('image')->toMediaCollection('images');
+        }
    		
         return redirect()->route('foodcategories.index')->with('success', 'FoodCategory Created Successfully!');
     }
@@ -49,6 +53,11 @@ class FoodCategoryController extends Controller
         ]);
   
         $foodcategory->update($request->all());
+
+        if($request->hasFile('image')){
+            $foodcategory->clearMediaCollection('images');
+            $foodcategory->addMediaFromRequest('image')->toMediaCollection('images');
+        }
   
         return redirect()->route('foodcategories.index')
                         ->with('success','FoodCategory updated successfully');

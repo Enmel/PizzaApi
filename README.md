@@ -4,9 +4,24 @@ Php > 7.1
 
 ### Instalacion
 
+Primero clonamos el proyecto
+
 ```sh
 $ git clone https://github.com/Enmel/PizzaApi
 ```
+
+E instalamos las dependencias
+
+```sh
+$ composer install
+```
+
+Ahora renombramos el archivo ".env.example" que esta en la raiz del directorio a ".env" 
+
+```sh
+$ php artisan storage:link
+```
+Con eso se crea un link simbolico entre la carpeta storage y sus subcarpetas storage/app/public. Que es la utilizada por imagenes.
 
 ```sh
 php artisan migrate:fresh
@@ -27,6 +42,8 @@ php artisan passport:install
     * ~Tables~
     * ~Orders~
 * Capacidad de agregar imagenes a la comida (Food) y las categorias (FoodCategories)
+	* Food
+	* ~Categorias~
 * Agregar Factories y Seeders para llenar la base de datos con datos de prueba
     * Food
     * FoodCategories

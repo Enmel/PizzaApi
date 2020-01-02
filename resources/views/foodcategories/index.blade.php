@@ -22,12 +22,14 @@
         <tr>
             <th>No</th>
             <th>Nombre</th>
+            <th>Imagen</th>
             <th width="280px">Action</th>
         </tr>
         @foreach ($foodcategories as $foodcategory)
         <tr>
             <td>{{ ++$i }}</td>
             <td>{{ $foodcategory->name }}</td>
+            <td><image src="{{ $foodcategory->getFirstMedia('images')->getFullUrl()}}" width="150"></td>
             <td>
                 <form action="{{ route('foodcategories.destroy', $foodcategory->id) }}" method="POST"> 
                     <a class="btn btn-primary" href="{{ route('foodcategories.edit',$foodcategory->id) }}">Edit</a>
