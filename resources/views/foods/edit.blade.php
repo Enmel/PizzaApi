@@ -23,7 +23,7 @@
     </div>
 @endif
    
-<form action="{{ route('foods.update', $food->id) }}" method="POST">
+<form action="{{ route('foods.update', $food->id) }}" method="POST" enctype="multipart/form-data">
     @method('PUT')
     @csrf
   
@@ -43,7 +43,7 @@
             </div>
             <div class="form-group">
                 <strong>Price:</strong>
-                <input type="number" name="price" class="form-control" placeholder="Precio" value="{{$food->price}}">
+                <input type="number" name="price" step=".01" class="form-control" placeholder="Precio" value="{{$food->price}}">
             </div>
             <div class="form-group">
                 <strong>Descripcion:</strong>
@@ -59,6 +59,9 @@
                     @endforeach
                 </select>
             </div>
+            <image src="{{ $food->getFirstMedia('images')->getFullUrl()}}" width="100">
+            <span>Nota: esta es la imagen actual</span>
+            <input type="file" name="image" class="form-control mt-2">
         </div>
         <div class="col-xs-12 col-sm-12 col-md-12 text-center">
                 <button type="submit" class="btn btn-primary">Submit</button>

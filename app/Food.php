@@ -3,9 +3,13 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Spatie\MediaLibrary\HasMedia\HasMedia;
+use Spatie\MediaLibrary\HasMedia\HasMediaTrait;
 
-class Food extends Model
+class Food extends Model implements HasMedia
 {
+    use HasMediaTrait;
+
     public $timestamps = false;
 
     protected $fillable = [

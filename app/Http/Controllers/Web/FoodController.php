@@ -38,7 +38,11 @@ class FoodController extends Controller
             'description' => 'max:512'
         ]);
   
-        Food::create($request->all());
+        $food = Food::create($request->all());
+
+        if($request->hasFile('image')){
+            $food->addMediaFromRequest('image')->toMediaCollection('images');
+        }
    		
         return redirect()->route('foods.index')->with('success', 'Food Created Successfully!');
     }
@@ -68,6 +72,11 @@ class FoodController extends Controller
         ]);
   
         $food->update($request->all());
+
+        if($request->hasFile('image')){
+            $food->clearMediaCollection('images');
+            $food->addMediaFromRequest('image')->toMediaCollection('images');
+        }
   
         return redirect()->route('foods.index')
                         ->with('success','Food updated successfully');

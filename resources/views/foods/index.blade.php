@@ -26,6 +26,7 @@
             <th>Size</th>
             <th>Category</th>
             <th>Price</th>
+            <th>Image</th>
             <th width="280px">Action</th>
         </tr>
         @foreach ($foods as $food)
@@ -36,6 +37,7 @@
             <td>{{ $food->size }}</td>
             <td>{{ $food->categorydata->name }}</td>
             <td>{{ $food->price }}</td>
+            <td><image src="{{ $food->getFirstMedia('images')->getFullUrl()}}" width="100"></td>
             <td>
                 <form action="{{ route('foods.destroy', $food->id) }}" method="POST"> 
                     <a class="btn btn-primary" href="{{ route('foods.edit',$food->id) }}">Edit</a>

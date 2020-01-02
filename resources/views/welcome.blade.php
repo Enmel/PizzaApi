@@ -21,7 +21,9 @@
             </div>
         @endif
         <a href="{{ route('tables.index') }}">Mesas</a>
-        <a href="{{ route('foodcategories.index') }}">Categorias de comida</a>
+        <a href="{{ route('foodcategories.index') }}">Categorias</a>
         <a href="{{ route('foods.index') }}">Comidas</a>
+        <a href="{{ route('reservations.index') }}">Reservaciones</a>
+        <a href="{{ route('orders.index') }}">Ordenes</a>
     </body>
 </html>

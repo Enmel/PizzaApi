@@ -16,7 +16,7 @@ E instalamos las dependencias
 $ composer install
 ```
 
-Ahora renombramos el archivo ".env.example" que esta en la raiz del directorio a ".env" 
+Ahora renombramos el archivo ".env.example" que esta en la raiz del directorio a ".env" y configuramos los parametros de la base de datos
 
 ```sh
 $ php artisan storage:link
@@ -41,8 +41,8 @@ php artisan passport:install
     * ~Categories~
     * ~Tables~
     * ~Orders~
-* Capacidad de agregar imagenes a la comida (Food) y las categorias (FoodCategories)
-	* Food
+* ~Capacidad de agregar imagenes a la comida (Food) y las categorias (FoodCategories)~
+	* ~Food~
 	* ~Categorias~
 * Agregar Factories y Seeders para llenar la base de datos con datos de prueba
     * Food
