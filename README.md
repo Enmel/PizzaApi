@@ -31,6 +31,16 @@ php artisan migrate:fresh
 php artisan passport:install
 ```
 
+### Documentacion del api
+
+Para generar la documentacion usar:
+
+```sh
+php artisan l5-swagger:generate
+```
+
+Esto genera la documentacion con Swagger ui en la ruta /api/documentation
+
 ### TODOS (Release de Arturo)
 
 * ~Sistema de Reservacion de Mesa~
@@ -49,5 +59,12 @@ php artisan passport:install
     * FoodCategories
     * Users (admin)
 * Agregar la documentacion con Swagger
+    * ~Agregar y configurar Swagger~
+    * ~Users~
+    * Orders
+    * Foods
+    * Categories
+    * Tables
+    * Reservations
 * Agregar Gates para las autorizaciones de usuarios
 * Integracion con MailGun

@@ -1,0 +1,232 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "ApiPizza",
+        "description": "Api para pedidos de comida",
+        "contact": {
+            "email": "enmelm@gmail.com"
+        },
+        "license": {
+            "name": "Apache 2.0",
+            "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
+        },
+        "version": "1.0.0"
+    },
+    "servers": [
+        {
+            "url": "http://apipizza.test/",
+            "description": "Servidor local de pruebas"
+        }
+    ],
+    "paths": {
+        "/": {
+            "get": {
+                "description": "Home page",
+                "responses": {
+                    "default": {
+                        "description": "Pagina inicial de administracion"
+                    }
+                },
+                "security": [
+                    {
+                        "TokenBearer": []
+                    }
+                ]
+            }
+        },
+        "/api/v1/register": {
+            "post": {
+                "tags": [
+                    "users"
+                ],
+                "summary": "Registrar",
+                "description": "Da de alta a un usuario",
+                "operationId": "registerUser",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "name": {
+                                        "type": "string"
+                                    },
+                                    "email": {
+                                        "type": "string"
+                                    },
+                                    "password": {
+                                        "type": "password"
+                                    },
+                                    "c_password": {
+                                        "description": "Confirmacion de password",
+                                        "type": "password"
+                                    }
+                                },
+                                "type": "object",
+                                "example": {
+                                    "email": "enmarval@example.com",
+                                    "name": "Enmanuel Marval",
+                                    "password": "Linux12345@",
+                                    "c_password": "Linux12345@"
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "token": {
+                                            "type": "string"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad request"
+                    }
+                }
+            }
+        },
+        "/api/v1/login": {
+            "post": {
+                "tags": [
+                    "users"
+                ],
+                "summary": "Login",
+                "description": "Retorna el token de autorizacion",
+                "operationId": "loginUser",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "email": {
+                                        "type": "string"
+                                    },
+                                    "password": {
+                                        "type": "password"
+                                    }
+                                },
+                                "type": "object",
+                                "example": {
+                                    "email": "enmarval@example.com",
+                                    "password": "Linux12345@"
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "token": {
+                                            "type": "string"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Datos incorrectos"
+                    }
+                }
+            }
+        },
+        "/api/v1/getUser": {
+            "post": {
+                "tags": [
+                    "users"
+                ],
+                "summary": "User data",
+                "description": "Retorna los datos del usuario",
+                "operationId": "showUser",
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "id": {
+                                            "type": "integer"
+                                        },
+                                        "name": {
+                                            "type": "string"
+                                        },
+                                        "email": {
+                                            "type": "string"
+                                        },
+                                        "email_verified_at": {
+                                            "type": "dateTime"
+                                        },
+                                        "creatde_at": {
+                                            "type": "dateTime"
+                                        },
+                                        "updated_at": {
+                                            "type": "dateTime"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "TokenBearer": []
+                    }
+                ]
+            }
+        }
+    },
+    "tags": [
+        {
+            "name": "orders",
+            "description": "Pedir comida, y listar las ordenes activas o pendientes"
+        },
+        {
+            "name": "reservations",
+            "description": "Crear reservaciones y listar reservaciones pendientes o aceptadas"
+        },
+        {
+            "name": "foods",
+            "description": "listar recurso de comida"
+        },
+        {
+            "name": "categories",
+            "description": "listar categorias de la comida"
+        },
+        {
+            "name": "tables",
+            "description": "listar mesas disponibles"
+        },
+        {
+            "name": "users",
+            "description": "operaciones sobre usuarios"
+        }
+    ],
+    "components": {
+        "securitySchemes": {
+            "TokenBearer": {
+                "type": "apiKey",
+                "description": "Bearer Token scheme",
+                "name": "Authorization",
+                "in": "header"
+            }
+        }
+    }
+}
