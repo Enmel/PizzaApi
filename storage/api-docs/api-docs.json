@@ -34,6 +34,129 @@
                 ]
             }
         },
+        "/api/v1/reservations": {
+            "get": {
+                "tags": [
+                    "reservations"
+                ],
+                "summary": "Lista de reservaciones",
+                "description": "Muestra una lista de las reservaciones echas por el usuario logeado",
+                "operationId": "listReservations",
+                "parameters": [
+                    {
+                        "name": "filter[status]",
+                        "in": "query",
+                        "description": "Filtra las reservaciones del usuario por estado. Estos son pending, accepted y rejected",
+                        "example": "pending"
+                    },
+                    {
+                        "name": "filter[seats]",
+                        "in": "query",
+                        "description": "Filtra las reservaciones del usuario por el numero de asientos exacto que se pidio",
+                        "required": false,
+                        "example": 4
+                    },
+                    {
+                        "name": "filter[date]",
+                        "in": "query",
+                        "description": "Filtra las reservaciones del usuario por fecha",
+                        "required": false,
+                        "example": "2020-01-01"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "properties": {
+                                                    "id": {
+                                                        "type": "integer",
+                                                        "example": "1"
+                                                    },
+                                                    "user": {
+                                                        "type": "string",
+                                                        "example": "Enmanuel Marval"
+                                                    },
+                                                    "date": {
+                                                        "type": "dateTime"
+                                                    },
+                                                    "seats": {
+                                                        "type": "string",
+                                                        "example": "4"
+                                                    },
+                                                    "status": {
+                                                        "type": "string",
+                                                        "enum": [
+                                                            "pending",
+                                                            "rejected",
+                                                            "accepted"
+                                                        ]
+                                                    }
+                                                },
+                                                "type": "object"
+                                            }
+                                        },
+                                        "links": {
+                                            "properties": {
+                                                "first": {
+                                                    "type": "string"
+                                                },
+                                                "last": {
+                                                    "type": "string"
+                                                },
+                                                "next": {
+                                                    "type": "string"
+                                                },
+                                                "prev": {
+                                                    "type": "string"
+                                                }
+                                            },
+                                            "type": "object"
+                                        },
+                                        "meta": {
+                                            "properties": {
+                                                "current_page": {
+                                                    "type": "integer"
+                                                },
+                                                "from": {
+                                                    "type": "integer"
+                                                },
+                                                "last_page": {
+                                                    "type": "integer"
+                                                },
+                                                "path": {
+                                                    "type": "string"
+                                                },
+                                                "per_page": {
+                                                    "type": "integer"
+                                                },
+                                                "to": {
+                                                    "type": "integer"
+                                                },
+                                                "total": {
+                                                    "type": "integer"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad request"
+                    }
+                }
+            }
+        },
         "/api/v1/register": {
             "post": {
                 "tags": [
