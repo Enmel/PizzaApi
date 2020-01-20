@@ -22,6 +22,9 @@ Route::prefix('v1')->group(function () {
     Route::post('login', 'Api\AuthController@login');
     Route::post('register', 'Api\AuthController@register');
 
+    Route::post('forget', 'Api\AuthController@getCode');
+    Route::post('password/reset', 'Api\AuthController@reset')->name("password.reset");
+
     Route::apiResource('foods', 'Api\FoodController');
     Route::apiResource('tables', 'Api\TableController');
     Route::apiResource('categories', 'Api\FoodCategoryController');
