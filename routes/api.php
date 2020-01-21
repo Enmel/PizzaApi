@@ -30,7 +30,7 @@ Route::prefix('v1')->group(function () {
     Route::apiResource('categories', 'Api\FoodCategoryController');
 
     Route::group(['middleware' => 'auth:api'], function () {
-        Route::post('getUser', 'Api\AuthController@getUser');
+        Route::get('getUser', 'Api\AuthController@getUser');
         Route::apiResource('orders', 'Api\OrderController');
         Route::apiResource('reservations', 'Api\ReservationController');
     });
