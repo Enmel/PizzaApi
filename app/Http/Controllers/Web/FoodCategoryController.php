@@ -51,13 +51,13 @@ class FoodCategoryController extends Controller
         $request->validate([
             'name' => 'required|max:256|string'
         ]);
-  
-        $foodcategory->update($request->all());
 
         if($request->hasFile('image')){
             $foodcategory->clearMediaCollection('images');
             $foodcategory->addMediaFromRequest('image')->toMediaCollection('images');
         }
+
+        $foodcategory->update($request->all());
   
         return redirect()->route('foodcategories.index')
                         ->with('success','FoodCategory updated successfully');
