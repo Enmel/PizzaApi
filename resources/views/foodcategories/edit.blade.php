@@ -33,6 +33,14 @@
                     <input type="text" name="name" value="{{ $foodcategory->name }}"  class="form-control mt-2" placeholder="Nombre">
                     <input type="file" name="image" class="form-control mt-2">
                 </div>
+                <div class="form-group">
+                    <strong>Etiquetas de tamaños:</strong>
+                    <input type="text" name="very_small_label" value="{{ $foodcategory->very_small_label }}" class="form-control" placeholder="Muy pequeño">
+                    <input type="text" name="small_label" value="{{ $foodcategory->small_label }}" class="form-control" placeholder="Pequeño">
+                    <input type="text" name="medium_label" value="{{ $foodcategory->medium_label }}" class="form-control" placeholder="Mediano">
+                    <input type="text" name="large_label" value="{{ $foodcategory->large_label }}" class="form-control" placeholder="Grande">
+                    <input type="text" name="very_large_label" value="{{ $foodcategory->very_large_label }}" class="form-control" placeholder="Muy grande">
+                </div>
             </div>
             <image src="{{ $foodcategory->getFirstMedia('images')->getFullUrl()}}" width="150">
             <span>Nota: esta es la imagen actual</span>
