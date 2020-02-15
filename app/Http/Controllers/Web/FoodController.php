@@ -36,11 +36,6 @@ class FoodController extends Controller
             'description' => 'max:512',
         ]);
 
-        /*[
-        'required',
-        Rule::in(['small', 'medium', 'big']),
-        ],*/
-
         $food = Food::create($request->all());
 
         if ($request->hasFile('image')) {

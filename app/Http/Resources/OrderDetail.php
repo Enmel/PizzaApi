@@ -19,11 +19,12 @@ class OrderDetail extends JsonResource
             'food' => [
                 'id' => $this->food_id,
                 'name' => $this->food->name,
-                'price' => $this->food->price,
-                'image' => $this->food->getFirstMedia('images')->getFullUrl()
+                'size' => $this->food->categorydata->{"$this->size"."_label"},
+                'image' => $this->food->getFirstMedia('images')->getFullUrl(),
+                'price' =>  $this->food->{"$this->size"."_price"}
             ],
             'quantity' => $this->quantity,
-            'subtotal' => $this->quantity * $this->food->price
+            'subtotal' => $this->quantity * $this->food->{"$this->size"."_price"}
         ];
     }
 }

@@ -14,14 +14,16 @@
     <table class="table table-bordered">
         <tr>
             <th>Pedido</th>
+            <th>Tamaño</th>
             <th>Precio</th>
             <th>Cantidad</th>
             <th>Subtotal</th>
         </tr>
         @foreach ($order->details as $detail)
         <tr>
-            <td>{{ $detail->food->name }}</td>
-            <td>{{$detail->food->price}}</td>
+            <td>{{$detail->food->name }}</td>
+            <td>{{$detail->food->categorydata->{"$detail->size"."_label"} }}</td>
+            <td>{{$detail->food->{"$detail->size"."_price"} }}</td>
             <td>{{$detail->quantity}}</td>
             <td>{{$detail->total}}</td>
         </tr>

@@ -2,21 +2,21 @@
 
 namespace App\Http\Controllers\API;
 
-use Illuminate\Http\Request;
-use App\Order;
-use App\OrderDetail;
 use App\Food;
-use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\API\BaseController as BaseController;
-use Validator;
-use Illuminate\Validation\Rule;
 use App\Http\Resources\Order as OrderResource;
 use App\Http\Resources\OrderCollection as OrdersResource;
-//Spatie uses
-use Spatie\QueryBuilder\QueryBuilder;
+use App\Order;
+use App\OrderDetail;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Validation\Rule;
 use Spatie\QueryBuilder\AllowedFilter;
+//Spatie uses
 use Spatie\QueryBuilder\Exceptions\InvalidFilterQuery;
 use Spatie\QueryBuilder\Exceptions\InvalidSortQuery;
+use Spatie\QueryBuilder\QueryBuilder;
+use Validator;
 
 class OrderController extends BaseController
 {
@@ -28,13 +28,14 @@ class OrderController extends BaseController
     public function index()
     {
         $user_id = Auth::id();
-        try {
+
+        try{
             $orders = QueryBuilder::for(Order::where('user_id', $user_id))
-            ->allowedFilters([AllowedFilter::exact('status'), AllowedFilter::exact('paidout'), AllowedFilter::exact('type')])
-            ->defaultSort('id')
-            ->allowedSorts('created_at')
-            ->paginate(15)
-            ->appends(request()->query());
+                    ->allowedFilters([AllowedFilter::exact('status'), AllowedFilter::exact('paidout'), AllowedFilter::exact('type')])
+                    ->defaultSort('id')
+                    ->allowedSorts('created_at')
+                    ->paginate(15)
+                    ->appends(request()->query());
 
         }catch(InvalidFilterQuery $e){
             return $this->sendError('Filtro invalido', $e->getMessage());
@@ -62,6 +63,10 @@ class OrderController extends BaseController
             ],
             'details.*.food_id' => 'required|exists:App\Food,id|integer',
             'details.*.quantity' => 'required|integer',
+            'details.*.size' => [
+                'required',
+                Rule::in(['very_small','small', 'medium', 'large', 'very_large']),
+            ],
         ]);
 
         if ($validator->fails()) {
@@ -74,7 +79,7 @@ class OrderController extends BaseController
             'user_id' => $user_id,
             'type' => $input['type'],
             'paidout' => 0,
-            'status' => 'pending'
+            'status' => 'pending',
         ]);
 
         $orderDetails = [];
@@ -82,12 +87,11 @@ class OrderController extends BaseController
         foreach ($input['details'] as $detail) {
 
             $food = Food::find($detail['food_id']);
-            $detail['total'] = $detail['quantity'] * $food->price;
+            $detail['total'] = $detail['quantity'] * $food->{$detail['size']."_price"};
             $detail['order_id'] = $order->id;
 
             OrderDetail::create($detail);
         }
-
 
         return new OrderResource($order);
     }

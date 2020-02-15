@@ -22,10 +22,7 @@
         <tr>
             <th>No</th>
             <th>Nombre</th>
-            <th>Descripcion</th>
-            <th>Size</th>
             <th>Category</th>
-            <th>Price</th>
             <th>Image</th>
             <th width="280px">Action</th>
         </tr>
@@ -33,10 +30,7 @@
         <tr>
             <td>{{ ++$i }}</td>
             <td>{{ $food->name }}</td>
-            <td>{{ $food->description }}</td>
-            <td>{{ $food->size }}</td>
             <td>{{ $food->categorydata->name }}</td>
-            <td>{{ $food->price }}</td>
             <td><image src="{{ $food->getFirstMedia('images')->getFullUrl()}}" width="100"></td>
             <td>
                 <form action="{{ route('foods.destroy', $food->id) }}" method="POST"> 
