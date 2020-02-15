@@ -16,13 +16,16 @@ class CreateFoodsTable extends Migration
         Schema::create('foods', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('name', 256);
-            $table->enum('size', ['small', 'medium', 'big']);
             $table->unsignedBigInteger('category');
             $table->foreign('category')
                 ->references('id')->on('food_categories')
                 ->onDelete('cascade');
-            $table->float('price', 8, 2);
-            $table->string('description', 512)->nullable();
+            $table->float('very_small_price', 8, 2);
+            $table->float('small_price', 8, 2);
+            $table->float('medium_price', 8, 2);
+            $table->float('large_price', 8, 2);
+            $table->float('very_large_price', 8, 2);
+            $table->text('description')->nullable();
         });
     }
 

@@ -17,7 +17,12 @@ class Food extends Model implements HasMedia
         'size',
         'price',
         'description',
-        'category'
+        'category',
+        'very_small_price',
+        'small_price',
+        'medium_price',
+        'large_price',
+        'very_large_price'
     ];
 
     public function categorydata()

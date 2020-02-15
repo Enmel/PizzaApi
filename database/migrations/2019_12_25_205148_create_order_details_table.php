@@ -23,6 +23,7 @@ class CreateOrderDetailsTable extends Migration
             $table->foreign('food_id')
                 ->references('id')->on('foods')
                 ->onDelete('cascade');
+            $table->enum('size', ['very_small', 'small', 'medium', 'large', 'very_large']);
             $table->integer('quantity');
             $table->float('total', 16, 2);
         });

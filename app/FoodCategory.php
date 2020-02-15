@@ -8,9 +8,9 @@ use Spatie\MediaLibrary\HasMedia\HasMediaTrait;
 
 class FoodCategory extends Model implements HasMedia
 {
-	use HasMediaTrait;
-	
+    use HasMediaTrait;
+
     protected $fillable = [
-        'name'
+        'name', 'very_small_label', 'small_label', 'medium_label', 'large_label', 'very_large_label'
     ];
 }

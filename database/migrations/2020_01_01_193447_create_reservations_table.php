@@ -6,11 +6,6 @@ use Illuminate\Support\Facades\Schema;
 
 class CreateReservationsTable extends Migration
 {
-    /**
-     * Run the migrations.
-     *
-     * @return void
-     */
     public function up()
     {
         Schema::create('reservations', function (Blueprint $table) {
@@ -21,16 +16,12 @@ class CreateReservationsTable extends Migration
                 ->onDelete('cascade');
             $table->enum('status', ['pending', 'accepted', 'rejected']);
             $table->integer('seats');
+            $table->text('comments')->nullable();
             $table->dateTime('date', 0);
             $table->timestamps();
         });
     }
 
-    /**
-     * Reverse the migrations.
-     *
-     * @return void
-     */
     public function down()
     {
         Schema::dropIfExists('reservations');

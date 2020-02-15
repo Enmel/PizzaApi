@@ -6,10 +6,10 @@ use Illuminate\Database\Eloquent\Model;
 
 class OrderDetail extends Model
 {
-	public $timestamps = false;
+    public $timestamps = false;
 
     protected $fillable = [
-        'order_id', 'food_id', 'quantity', 'total'
+        'order_id', 'food_id', 'quantity', 'total', 'size'
     ];
 
     public function order()
@@ -19,6 +19,6 @@ class OrderDetail extends Model
 
     public function food()
     {
-    	return $this->belongsTo('App\Food');
+        return $this->belongsTo('App\Food');
     }
 }

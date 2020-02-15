@@ -16,6 +16,11 @@ class CreateFoodCategoriesTable extends Migration
         Schema::create('food_categories', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('name', 128);
+            $table->string('very_small_label', 128)->nullable();
+            $table->string('small_label', 128)->nullable();
+            $table->string('medium_label', 128)->nullable();
+            $table->string('large_label', 128)->nullable();
+            $table->string('very_large_label', 128)->nullable();
             $table->timestamps();
         });
     }

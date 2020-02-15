@@ -16,7 +16,7 @@ class CreateTablesTable extends Migration
         Schema::create('tables', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('name', 256);
-            $table->string('description', 512)->nullable();
+            $table->text('description')->nullable();
             $table->integer('chairs');
         });
     }
