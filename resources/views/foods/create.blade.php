@@ -33,23 +33,6 @@
                 <input type="text" name="name" class="form-control" placeholder="Nombre">
             </div>
             <div class="form-group">
-                <strong>Size:</strong>
-                <select name="size" class="form-control">
-                    <option value="small">Small</option>
-                    <option value="medium">Medium</option>
-                    <option value="big">Big</option>
-                </select>
-            </div>
-            <div class="form-group">
-                <strong>Price:</strong>
-                <input type="number" name="price" step=".01" class="form-control" placeholder="Precio">
-            </div>
-            <div class="form-group">
-                <strong>Descripcion:</strong>
-                <textarea name="description" class="form-control" placeholder="Descripcion" maxlength="256">
-                </textarea>
-            </div>
-            <div class="form-group">
                 <strong>Categoria:</strong>
                 <select name="category" class="form-control">
                     @foreach ($categories as $category)
@@ -57,6 +40,20 @@
                     @endforeach
                 </select>
             </div>
+            <div class="form-group">
+                <strong>Descripcion:</strong>
+                <textarea name="description" class="form-control" placeholder="Descripcion" maxlength="256">
+                </textarea>
+            </div>
+            <div class="form-group">
+                <strong>Precio de porción:</strong>
+                <input type="number" name="very_small_price" step=".01" class="form-control" placeholder="Muy pequeña">
+                <input type="number" name="small_price" step=".01" class="form-control" placeholder="Pequeña">
+                <input type="number" name="medium_price" step=".01" class="form-control" placeholder="Mediana">
+                <input type="number" name="large_price" step=".01" class="form-control" placeholder="Grande">
+                <input type="number" name="very_large_price" step=".01" class="form-control" placeholder="Muy grande">
+            </div>
+            <p>las porciones en 0 no estarán disponbles para la venta</p>
             <input type="file" name="image" class="form-control mt-2">
         </div>
         <div class="col-xs-12 col-sm-12 col-md-12 text-center">

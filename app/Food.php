@@ -14,15 +14,13 @@ class Food extends Model implements HasMedia
 
     protected $fillable = [
         'name',
-        'size',
-        'price',
         'description',
         'category',
         'very_small_price',
         'small_price',
         'medium_price',
         'large_price',
-        'very_large_price'
+        'very_large_price',
     ];
 
     public function categorydata()

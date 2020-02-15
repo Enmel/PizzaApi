@@ -34,16 +34,12 @@
                 <input type="text" name="name" class="form-control" placeholder="Nombre" value="{{$food->name}}">
             </div>
             <div class="form-group">
-                <strong>Size:</strong>
-                <select name="size" class="form-control" value="{{$food->size}}">
-                    <option value="small">Small</option>
-                    <option value="medium">Medium</option>
-                    <option value="big">Big</option>
+                <strong>Categoria:</strong>
+                <select name="category" class="form-control" value="{{$food->category}}">
+                    @foreach ($categories as $category)
+                    <option value="{{$category->id}}">{{$category->name}}</option>
+                    @endforeach
                 </select>
-            </div>
-            <div class="form-group">
-                <strong>Price:</strong>
-                <input type="number" name="price" step=".01" class="form-control" placeholder="Precio" value="{{$food->price}}">
             </div>
             <div class="form-group">
                 <strong>Descripcion:</strong>
@@ -52,13 +48,14 @@
                 </textarea>
             </div>
             <div class="form-group">
-                <strong>Categoria:</strong>
-                <select name="category" class="form-control" value="{{$food->category}}">
-                    @foreach ($categories as $category)
-                    <option value="{{$category->id}}">{{$category->name}}</option>
-                    @endforeach
-                </select>
+                <strong>Precio de porción:</strong>
+                <input type="number" name="very_small_price" step=".01" class="form-control" value="{{$food->very_small_price}}" placeholder="Muy pequeña">
+                <input type="number" name="small_price" step=".01" class="form-control" value="{{$food->small_price}}" placeholder="Pequeña">
+                <input type="number" name="medium_price" step=".01" class="form-control" value="{{$food->medium_price}}" placeholder="Mediana">
+                <input type="number" name="large_price" step=".01" class="form-control" value="{{$food->large_price}}" placeholder="Grande">
+                <input type="number" name="very_large_price" step=".01" class="form-control" value="{{$food->very_large_price}}" placeholder="Muy grande">
             </div>
+            <p>las porciones en 0 no estarán disponbles para la venta</p>
             <image src="{{ $food->getFirstMedia('images')->getFullUrl()}}" width="100">
             <span>Nota: esta es la imagen actual</span>
             <input type="file" name="image" class="form-control mt-2">
