@@ -19,7 +19,8 @@ class OrderDetail extends JsonResource
             'food' => [
                 'id' => $this->food_id,
                 'name' => $this->food->name,
-                'price' => $this->food->price
+                'price' => $this->food->price,
+                'image' => $this->food->getFirstMedia('images')->getFullUrl()
             ],
             'quantity' => $this->quantity,
             'subtotal' => $this->quantity * $this->food->price

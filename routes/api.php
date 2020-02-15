@@ -23,12 +23,15 @@ Route::prefix('v1')->group(function () {
     Route::post('register', 'Api\AuthController@register');
     Route::post('sendResetLinkEmail', 'Auth\ForgotPasswordController@sendResetLinkEmail');
 
+    Route::post('forget', 'Api\AuthController@getCode');
+    Route::post('password/reset', 'Api\AuthController@reset')->name("password.reset");
+
     Route::apiResource('foods', 'Api\FoodController');
     Route::apiResource('tables', 'Api\TableController');
     Route::apiResource('categories', 'Api\FoodCategoryController');
 
     Route::group(['middleware' => 'auth:api'], function () {
-        Route::post('getUser', 'Api\AuthController@getUser');
+        Route::get('getUser', 'Api\AuthController@getUser');
         Route::apiResource('orders', 'Api\OrderController');
         Route::apiResource('reservations', 'Api\ReservationController');
     });

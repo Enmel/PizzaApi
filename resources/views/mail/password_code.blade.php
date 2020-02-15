@@ -1,0 +1,1 @@
+Este es tu codigo de verificacion: <h3>{{$code}}</h3>

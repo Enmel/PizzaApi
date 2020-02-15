@@ -28,7 +28,7 @@ class FoodController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'name' => 'required|unique:App\Food|max:250',
+            'name' => 'required|max:250',
             'size' => [
                 'required',
                 Rule::in(['small', 'medium', 'big']),
@@ -61,7 +61,7 @@ class FoodController extends Controller
     public function update(Request $request, Food $food)
     {
         $request->validate([
-            'name' => 'required|unique:App\Food|max:250',
+            'name' => 'required|max:250',
             'size' => [
                 'required',
                 Rule::in(['small', 'medium', 'big']),
