@@ -17,7 +17,14 @@ class FoodCategory extends JsonResource
         return [
             'id' => $this->id,
             'name' => $this->name,
-            'image' => $this->getFirstMedia('images')->getFullUrl()
+            'image' => $this->getFirstMedia('images')->getFullUrl(),
+            'labels' => [
+                'very_small' => $this->very_small_label,
+                'small' => $this->small_label,
+                'medium' => $this->medium_label,
+                'large' => $this->large_label,
+                'very_large' => $this->very_large_label,
+            ],
         ];
     }
 }
