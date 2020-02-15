@@ -74,6 +74,16 @@ class AuthController extends Controller
         return response()->json($user, $this->successStatus);
     }
 
+    public function getSecretQuestion(Request $request){
+
+        $email = $request->input('email');
+        $answer = $request->input('answer');
+
+        $user = User::where('email', $email)->first();
+
+        return response()->json($user->question->question, $this->successStatus);
+    }
+
     public function reset(Request $request)
     {
 
