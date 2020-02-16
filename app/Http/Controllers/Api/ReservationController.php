@@ -70,7 +70,8 @@ class ReservationController extends BaseController
             'user_id' => $user_id,
             'status' => 'pending',
             'seats' => $input['seats'],
-            'date' => date("Y/m/d H:i:s", $input['date'])
+            'date' => date("Y/m/d H:i:s", $input['date']), 
+            'comments' => $input['comments']
         ]);
 
 

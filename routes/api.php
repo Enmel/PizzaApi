@@ -23,6 +23,7 @@ Route::prefix('v1')->group(function () {
     Route::post('register', 'Api\AuthController@register');
     Route::post('password/reset', 'Api\AuthController@reset')->name("password.reset");
     Route::post('secretQuestion',  'Api\AuthController@getSecretQuestion');
+    Route::post('orders/{order}/vouchers', 'Api\OrderController@addVoucher');
 
     Route::apiResource('foods', 'Api\FoodController');
     Route::apiResource('tables', 'Api\TableController');

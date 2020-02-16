@@ -30,10 +30,10 @@
             <td>{{ ++$i }}</td>
             <td>{{ $order->user->name }}</td>
             <td>{{ $order->created_at }}</td>
-            @if ($order->paidout == 0)
-                <td><a href="{{ route('orders.paidout', $order->id) }}" class="badge badge-warning">Pendiente</a></td>
+            @if ($order->vouchers->where('paidout', '=', 1)->sum('amount') > $order->details->sum('total'))
+                <td><div class="badge badge-success">Confirmado</div></td>
             @else
-                <td><a href="{{ route('orders.paidout', $order->id) }}" class="badge badge-success">Confirmado</a></td>
+                <td><div class="badge badge-warning">Pendiente</div></td>
             @endif
             @if ($order->status == "pending")
                 <td><a href="{{ route('orders.status', $order->id) }}" class="badge badge-warning">Pendiente</a></td>
@@ -43,7 +43,11 @@
             <td>{{$order->details->sum('total')}}</td>
             <td>
                 <form action="{{ route('orders.destroy', $order->id) }}" method="POST"> 
-                    <a class="btn btn-primary" href="{{ route('orders.show', $order->id) }}">Show</a>
+                    <a class="btn btn-primary" href="{{ route('orders.show', $order->id) }}"><i class="fas fa-eye"></i></a>
+
+                    @if (count($order->vouchers) > 0)
+                        <a class="btn btn-info" href="{{ route('orders.vouchers', $order->id) }}"><i class="far fa-credit-card"></i></a>
+                    @endif
    
                     @csrf
                     @method('DELETE')

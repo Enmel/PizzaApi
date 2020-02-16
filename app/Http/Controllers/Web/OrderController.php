@@ -4,6 +4,7 @@ namespace App\Http\Controllers\WEB;
 
 use App\Http\Controllers\Controller;
 use App\Order;
+use App\OrderVoucher;
 use Illuminate\Http\Request;
 
 class OrderController extends Controller
@@ -48,5 +49,15 @@ class OrderController extends Controller
 
         return redirect()->route('orders.index')
             ->with('success', 'Order deleted successfully');
+    }
+
+    public function vouchers(Order $order) {
+        return view('orders.vouchers', compact('order'));
+    }
+
+    public function confirmPaid(OrderVoucher $orderVoucher) {
+        $orderVoucher->paidout = 1;
+        $order = $orderVoucher->order;
+        return view('orders.vouchers', compact('order'));
     }
 }

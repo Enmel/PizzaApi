@@ -88,7 +88,7 @@ class AuthController extends Controller
     {
 
         $email = $request->input('email');
-        $answer = $request->input('code');
+        $answer = $request->input('answer');
         $password = $request->input('password');
 
         $validator = Validator::make(

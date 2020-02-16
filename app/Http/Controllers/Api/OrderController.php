@@ -8,6 +8,7 @@ use App\Http\Resources\Order as OrderResource;
 use App\Http\Resources\OrderCollection as OrdersResource;
 use App\Order;
 use App\OrderDetail;
+use App\OrderVoucher;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\Rule;
@@ -116,8 +117,43 @@ class OrderController extends BaseController
      */
     public function destroy(Order $order)
     {
+        if($order->vouchers->where('paidout', '=', 1)->sum('amount') > $order->details->sum('total')){
+            return $this->sendError('No puedes cancelar la orden', 'Orden en proceso. No se puede cancelar');
+        }
+
         $order->delete();
 
         return $this->sendResponse([], 'Order deleted successfully.');
+    }
+
+    public function addVoucher(Request $request, Order $order) {
+
+        $input = $request->all();
+
+        $validator = Validator::make($input, [
+            'bank' => 'required|string|max:250',
+            'amount' => 'required|numeric',
+            'reference' => 'required|string|max:250',
+        ]);
+
+        /* 'bank' => [
+            'required',
+            Rule::in(['pickup', 'delivery']),
+        ], */
+
+        if ($validator->fails()) {
+            return $this->sendError('Validation Error.', $validator->errors());
+        }
+
+        $voucher = new OrderVoucher([
+            'bank' => $input['bank'],
+            'reference' => $input['reference'],
+            'amount' => $input['amount'],
+            'comments' => $input['comments']
+        ]);
+
+        $order->vouchers()->save($voucher);
+
+        return $this->sendResponse([], 'Voucher agregado exitosamente.');
     }
 }
