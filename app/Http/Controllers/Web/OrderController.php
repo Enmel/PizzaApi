@@ -55,11 +55,10 @@ class OrderController extends Controller
         return view('orders.vouchers', compact('order'));
     }
 
-    public function confirmPaid($ordervoucher) {
-        $OrderVoucher = OrderVoucher::find($ordervoucher);
-        $OrderVoucher->paidout = 1;
-        $OrderVoucher->save();
-        $order = $OrderVoucher->order;
+    public function confirmPaid(Order $order, OrderVoucher $ordervoucher) {
+        $ordervoucher->paidout = 1;
+        $ordervoucher->save();
+        $order = $ordervoucher->order;
         return view('orders.vouchers', compact('order'));
     }
 }
