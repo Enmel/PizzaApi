@@ -37,8 +37,8 @@ class AuthController extends Controller
 
         $securityQuestion = SegurityQuestion::create([
             'user_id' => $user->id,
-            'answer' => $input['answer'],
-            'question' => bcrypt($input['question']),
+            'question' => $input['question'],
+            'answer' => bcrypt($input['answer']),
         ]);
 
         $success['token'] = $user->createToken('AppName')->accessToken;
@@ -77,7 +77,13 @@ class AuthController extends Controller
     public function getSecretQuestion(Request $request){
 
         $email = $request->input('email');
-        $answer = $request->input('answer');
+
+        $validator = Validator::make(
+            $request->all(),
+            [
+                'email' => 'required|email'
+            ]
+        );
 
         $user = User::where('email', $email)->first();
 
