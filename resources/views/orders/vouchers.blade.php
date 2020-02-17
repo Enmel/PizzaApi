@@ -26,7 +26,7 @@
             <td>{{$voucher->reference}}</td>
             <td>{{$voucher->bank}}</td>
             @if ($voucher->paidout == 0)
-                <td><a href="{{ route('orders.confirmPaid', ['order'=> $order->id,'orderVoucher'=>$voucher->id]) }}" class="badge badge-warning">Pendiente</a></td>
+                <td><a href="{{ route('orders.confirmPaid', ['order'=> $order->id,'ordervoucher'=>$voucher->id]) }}" class="badge badge-warning">Pendiente</a></td>
             @else
                 <td><div class="badge badge-success">Confirmado</div></td>
             @endif
