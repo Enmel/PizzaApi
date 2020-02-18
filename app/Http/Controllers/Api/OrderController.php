@@ -9,6 +9,7 @@ use App\Http\Resources\OrderCollection as OrdersResource;
 use App\Order;
 use App\OrderDetail;
 use App\OrderVoucher;
+use App\Http\Resources\OrderVoucherCollection;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\Rule;
@@ -153,6 +154,31 @@ class OrderController extends BaseController
         ]);
 
         $order->vouchers()->save($voucher);
+
+        return $this->sendResponse([], 'Voucher agregado exitosamente.');
+    }
+
+    public function getVouchers(Request $request) {
+
+        $user_id = Auth::id();
+
+        try{
+            $orders = QueryBuilder::for( OrderVoucher::whereHas('order', function ($q) use($user_id) {
+                    $q->where('user_id', '=', $user_id);
+            }))
+                    ->allowedFilters([AllowedFilter::exact('order_id'), AllowedFilter::exact('paidout'), AllowedFilter::exact('amount')])
+                    ->defaultSort('id')
+                    ->allowedSorts('created_at')
+                    ->paginate(15)
+                    ->appends(request()->query());
+
+        }catch(InvalidFilterQuery $e){
+            return $this->sendError('Filtro invalido', $e->getMessage());
+        }catch(InvalidSortQuery $e){
+            return $this->sendError('Sort invalido', $e->getMessage());
+        }
+
+        return new OrderVoucherCollection($orders);
 
         return $this->sendResponse([], 'Voucher agregado exitosamente.');
     }
