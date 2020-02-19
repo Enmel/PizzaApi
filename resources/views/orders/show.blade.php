@@ -31,6 +31,7 @@
         <tr>
             <td></td>
             <td></td>
+            <td></td>
             <th>Total:</th>
             <td>{{$order->details->sum('total')}}</td>
         </tr>

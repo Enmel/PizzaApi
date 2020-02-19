@@ -19,7 +19,7 @@ class CreateOrderVouchersTable extends Migration
             $table->foreign('order_id')
                 ->references('id')->on('orders')
                 ->onDelete('cascade');
-            $table->float('amount', 8, 2);
+            $table->float('amount', 15, 2);
             $table->string('bank', 250);
             $table->string('reference', 250)->default(0);
             $table->text('comments')->nullable();
