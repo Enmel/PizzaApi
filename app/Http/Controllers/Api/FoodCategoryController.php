@@ -23,10 +23,9 @@ class FoodCategoryController extends BaseController
      */
     public function index()
     {
-        $categories = FoodCategory::all();
 
         try {
-            $categories = QueryBuilder::for(FoodCategory::class)
+            $categories = QueryBuilder::for(FoodCategory::where("name", "!=", "Promociones"))
             ->allowedFilters(['name'])
             ->defaultSort('id')
             ->allowedSorts('name', 'created_at')
@@ -40,6 +39,22 @@ class FoodCategoryController extends BaseController
         return new FoodCategoriesResource($categories);
     }
 
+    public function promotions () {
+        
+        try {
+            $categories = QueryBuilder::for(FoodCategory::where("name", "Promociones"))
+            ->allowedFilters(['name'])
+            ->defaultSort('id')
+            ->allowedSorts('name', 'created_at')
+            ->paginate(15)
+            ->appends(request()->query());
+
+        }catch(InvalidFilterQuery $e){
+            return $this->sendError('Filtro invalido', $e->getMessage());
+        }
+
+        return new FoodCategoriesResource($categories);
+    }
     /**
      * Display the specified resource.
      *

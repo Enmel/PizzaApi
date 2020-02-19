@@ -2,13 +2,16 @@
 
 namespace App\Http\Controllers\API;
 
+
 use Illuminate\Http\Request;
 use App\Food;
+use App\FoodCategory;
 use App\Http\Controllers\API\BaseController as BaseController;
 use Validator;
 use Illuminate\Validation\Rule;
 use App\Http\Resources\Food as FoodResource;
 use App\Http\Resources\FoodCollection as FoodsResource;
+
 //Spatie uses
 use Spatie\QueryBuilder\QueryBuilder;
 use Spatie\QueryBuilder\AllowedFilter;
@@ -27,6 +30,27 @@ class FoodController extends BaseController
         try{
             $foods = QueryBuilder::for(Food::class)
             ->allowedFilters(['name', AllowedFilter::exact('size'), AllowedFilter::exact('category')])
+            ->defaultSort('id')
+            ->allowedSorts('name', 'price')
+            ->paginate(15)
+            ->appends(request()->query());
+
+        }catch(InvalidFilterQuery $e){
+            return $this->sendError('Filtro invalido', $e->getMessage());
+        }catch(InvalidSortQuery $e){
+            return $this->sendError('Sort invalido', $e->getMessage());
+        }
+
+        return new FoodsResource($foods);
+    }
+
+    public function promotions()
+    {
+
+        $FoodCategory = FoodCategory::where("name", "Promociones")->get()->first();
+        try{
+            $foods = QueryBuilder::for(Food::where("category", "==", $FoodCategory->id))
+            ->allowedFilters(['name', AllowedFilter::exact('size')])
             ->defaultSort('id')
             ->allowedSorts('name', 'price')
             ->paginate(15)

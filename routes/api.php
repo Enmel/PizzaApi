@@ -29,6 +29,9 @@ Route::prefix('v1')->group(function () {
     Route::apiResource('tables', 'Api\TableController');
     Route::apiResource('categories', 'Api\FoodCategoryController');
 
+    Route::get("promotion", 'Api\FoodCategoryController@promotions');
+    Route::get("promotions", 'Api\FoodController@promotions');
+
     Route::group(['middleware' => 'auth:api'], function () {
         Route::get('getUser', 'Api\AuthController@getUser');
         Route::apiResource('orders', 'Api\OrderController');
