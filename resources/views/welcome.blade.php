@@ -3,7 +3,8 @@
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0-alpha/css/bootstrap.css" rel="stylesheet">
+        <link rel="stylesheet" href="{{asset('css/app.css') }}">
+        <script src="{{asset('js/app.js') }}" crossorigin="anonymous"></script>
         <title>Panel de Control</title>
     </head>
     <body>
@@ -20,10 +21,20 @@
                 @endauth
             </div>
         @endif
-        <a href="{{ route('tables.index') }}">Mesas</a>
-        <a href="{{ route('foodcategories.index') }}">Categorias</a>
-        <a href="{{ route('foods.index') }}">Comidas</a>
-        <a href="{{ route('reservations.index') }}">Reservaciones</a>
-        <a href="{{ route('orders.index') }}">Ordenes</a>
+        <nav class="navbar navbar-light bg-light">
+            <a class="navbar-brand" href="#">
+                <img src="" width="30" height="30" class="d-inline-block align-top" alt="">
+                <i class="fab fa-cpanel"></i>
+            </a>
+        </nav>
+
+        <div>
+            <a href="{{ route('tables.index') }}"><i class="fas fa-table"></i></a>
+            <a href="{{ route('foodcategories.index') }}">Categorias</a>
+            <a href="{{ route('foods.index') }}">Comidas</a>
+            <a href="{{ route('reservations.index') }}">Reservaciones</a>
+            <a href="{{ route('orders.index') }}">Ordenes</a>
+        </div>
+        
     </body>
 </html>

@@ -46,7 +46,7 @@
                     <a class="btn btn-primary" href="{{ route('orders.show', $order->id) }}"><i class="fas fa-eye"></i></a>
 
                     @if (count($order->vouchers) > 0)
-                        <a class="btn btn-info" href="{{ route('orders.vouchers', $order->id) }}"><i class="far fa-credit-card"></i></a>
+                        <a class="btn btn-info" style="color: #fff !important;" href="{{ route('orders.vouchers', $order->id) }}"><i class="fas fa-money-check-alt"></i></a>
                     @endif
    
                     @csrf
