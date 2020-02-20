@@ -52,6 +52,7 @@ class Food extends JsonResource
             'category' => [
                 'id' => $this->categorydata->id,
                 'name' => $this->categorydata->name,
+                'image' => $this->categorydata->getFirstMedia('images')->getFullUrl()
             ],
         ];
     }

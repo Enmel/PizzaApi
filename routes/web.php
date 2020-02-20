@@ -12,7 +12,7 @@
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return redirect()->route('tables.index');
 });
 
 Route::resource('tables','Web\TableController');

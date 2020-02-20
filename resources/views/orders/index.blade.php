@@ -1,13 +1,6 @@
 @extends('orders.layout')
  
 @section('content')
-    <div class="row">
-        <div class="col-lg-12 margin-tb">
-            <div class="pull-left">
-                <a class="btn btn-info" href="{{ url('/') }}">Back</a>
-            </div>
-        </div>
-    </div>
    
     @if ($message = Session::get('success'))
         <div class="alert alert-success">
