@@ -48,8 +48,9 @@ class FoodController extends BaseController
     {
 
         $FoodCategory = FoodCategory::where("name", "Promociones")->get()->first();
+
         try{
-            $foods = QueryBuilder::for(Food::where("category", "==", $FoodCategory->id))
+            $foods = QueryBuilder::for(Food::where("category", $FoodCategory->id))
             ->allowedFilters(['name', AllowedFilter::exact('size')])
             ->defaultSort('id')
             ->allowedSorts('name', 'price')
