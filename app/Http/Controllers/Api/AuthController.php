@@ -7,6 +7,7 @@ use App\SegurityQuestion;
 use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\HAsh;
 use Validator;
 
 class AuthController extends Controller
@@ -85,7 +86,15 @@ class AuthController extends Controller
             ]
         );
 
+        if ($validator->fails()) {
+            return response()->json(['error' => $validator->errors()], 400);
+        }
+
         $user = User::where('email', $email)->first();
+
+        if(empty($user)){
+            return response()->json(['error' =>['email' => ["Email no encontrado"]]], 400);
+        }
 
         return response()->json($user->question->question, $this->successStatus);
     }
@@ -107,13 +116,17 @@ class AuthController extends Controller
         );
 
         if ($validator->fails()) {
-            return response()->json(['error' => $validator->errors()], 401);
+            return response()->json(['error' => $validator->errors()], 400);
         }
 
         $user = User::where('email', $email)->first();
 
-        if ($user->question->answer == bcrypt($answer)) {
-            return response()->json(['error' => ['answer' => ['Respuest incorrecta']]], 401);
+        if(empty($user)){
+            return response()->json(['error' => ['email' => ['No existe']]], 400);
+        }
+
+        if (!Hash::check($answer, $user->question->answer)) {
+            return response()->json(['error' => ['answer' => ['Respuesta incorrecta']]], 400);
         }
 
         $user->password = bcrypt($password);
