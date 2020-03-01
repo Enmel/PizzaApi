@@ -5,6 +5,7 @@ namespace App\Http\Controllers\WEB;
 use App\Http\Controllers\Controller;
 use App\Order;
 use App\OrderVoucher;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class OrderController extends Controller
@@ -12,6 +13,30 @@ class OrderController extends Controller
     public function index()
     {
         $orders = Order::paginate(15);
+
+        return view('orders.index', compact('orders'))
+            ->with('i', (request()->input('page', 1) - 1) * 5);
+    }
+
+    public function actualYear()
+    {
+        $orders = Order::whereYear('created_at', Carbon::now()->year)->paginate(15);
+
+        return view('orders.index', compact('orders'))
+            ->with('i', (request()->input('page', 1) - 1) * 5);
+    }
+
+    public function actualMonth()
+    {
+        $orders = Order::whereMonth('created_at', Carbon::now()->month)->paginate(15);                        
+
+        return view('orders.index', compact('orders'))
+            ->with('i', (request()->input('page', 1) - 1) * 5);
+    }
+
+    public function actualDay()
+    {
+        $orders = Order::where('created_at', '>=', Carbon::today())->paginate(15);
 
         return view('orders.index', compact('orders'))
             ->with('i', (request()->input('page', 1) - 1) * 5);

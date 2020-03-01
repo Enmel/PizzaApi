@@ -15,6 +15,10 @@ Route::get('/', function () {
     return redirect()->route('tables.index');
 });
 
+Route::get('/ordersActualDay', 'Web\OrderController@actualDay')->name('orders.actualDay');
+Route::get('/ordersActualMonth', 'Web\OrderController@actualMonth')->name('orders.actualMonth');
+Route::get('/ordersActualYear', 'Web\OrderController@actualYear')->name('orders.actualYear');
+
 Route::resource('tables','Web\TableController');
 Route::resource('foodcategories','Web\FoodCategoryController');
 Route::resource('foods','Web\FoodController');

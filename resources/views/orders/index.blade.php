@@ -7,6 +7,13 @@
             <p>{{ $message }}</p>
         </div>
     @endif
+
+    <div>
+        <a class="{{ Route::current()->getName() == 'orders.index' ? 'btn btn-primary' : 'btn btn-secondary' }}" href="{{ route('orders.index') }}"> Todas </a>
+        <a class="{{ Route::current()->getName() == 'orders.actualDay' ? 'btn btn-primary' : 'btn btn-secondary' }}" href="{{ route('orders.actualDay') }}"> Hoy </a>
+        <a class="{{ Route::current()->getName() == 'orders.actualMonth' ? 'btn btn-primary' : 'btn btn-secondary' }}" href="{{ route('orders.actualMonth') }}"> Mes </a>
+        <a class="{{ Route::current()->getName() == 'orders.actualYear' ? 'btn btn-primary' : 'btn btn-secondary' }}" href="{{ route('orders.actualYear') }}"> Año </a>
+    </div>
    
     <table class="table table-bordered">
         <tr>
@@ -35,7 +42,7 @@
             @endif
             <td>{{$order->details->sum('total')}}</td>
             <td>
-                <form action="{{ route('orders.destroy', $order->id) }}" method="POST"> 
+                <form > 
                     <a class="btn btn-primary" href="{{ route('orders.show', $order->id) }}"><i class="fas fa-eye"></i></a>
 
                     @if (count($order->vouchers) > 0)
@@ -43,9 +50,6 @@
                     @endif
    
                     @csrf
-                    @method('DELETE')
-      
-                    <button type="submit" class="btn btn-danger">Delete</button>
                 </form>
             </td>
         </tr>
