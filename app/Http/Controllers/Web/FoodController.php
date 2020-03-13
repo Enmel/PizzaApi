@@ -47,7 +47,7 @@ class FoodController extends Controller
             $food->addMediaFromRequest('image')->toMediaCollection('images');
         }
 
-        return redirect()->route('foods.index')->with('success', 'Food Created Successfully!');
+        return redirect()->route('foods.index')->with('success', 'Comida creada con exito!');
     }
 
     public function show(Food $food)
@@ -82,7 +82,7 @@ class FoodController extends Controller
         }
 
         return redirect()->route('foods.index')
-            ->with('success', 'Food updated successfully');
+            ->with('success', 'Comida actualizada con exito');
     }
 
     public function destroy(Food $food)
@@ -90,6 +90,6 @@ class FoodController extends Controller
         $food->delete();
 
         return redirect()->route('foods.index')
-            ->with('success', 'Food deleted successfully');
+            ->with('success', 'Comida borrada con exito');
     }
 }

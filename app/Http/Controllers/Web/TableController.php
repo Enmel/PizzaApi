@@ -36,7 +36,7 @@ class TableController extends Controller
   
         Table::create($request->all());
    		
-        return redirect()->route('tables.index')->with('success', 'Table Created Successfully!');
+        return redirect()->route('tables.index')->with('success', 'Mesa creada con exito!');
     }
    
     public function show(Table $table)
@@ -60,7 +60,7 @@ class TableController extends Controller
         $table->update($request->all());
   
         return redirect()->route('tables.index')
-                        ->with('success','Table updated successfully');
+                        ->with('success','Mesa actualizada con exito');
     }
   
     public function destroy(Table $table)
@@ -68,6 +68,6 @@ class TableController extends Controller
         $table->delete();
   
         return redirect()->route('tables.index')
-                        ->with('success','Table deleted successfully');
+                        ->with('success','Mesa borrada con exito');
     }
 }

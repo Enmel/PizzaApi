@@ -44,7 +44,7 @@ class FoodCategoryController extends Controller
         $category = FoodCategory::create($request->all());
         $category->addMediaFromRequest('image')->toMediaCollection('images');
 
-        return redirect()->route('foodcategories.index')->with('success', 'FoodCategory Created Successfully!');
+        return redirect()->route('foodcategories.index')->with('success', 'Categoria creada exitosamente!');
     }
 
     public function show(FoodCategory $foodcategory)
@@ -76,7 +76,7 @@ class FoodCategoryController extends Controller
         $foodcategory->update($request->all());
 
         return redirect()->route('foodcategories.index')
-            ->with('success', 'FoodCategory updated successfully');
+            ->with('success', 'Categoria actualizada con exito');
     }
 
     public function destroy(FoodCategory $foodcategory)
@@ -84,6 +84,6 @@ class FoodCategoryController extends Controller
         $foodcategory->delete();
 
         return redirect()->route('foodcategories.index')
-            ->with('success', 'FoodCategory deleted successfully');
+            ->with('success', 'Categoria borrada con exito');
     }
 }

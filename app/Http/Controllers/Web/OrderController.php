@@ -78,7 +78,7 @@ class OrderController extends Controller
         $order->delete();
 
         return redirect()->route('orders.index')
-            ->with('success', 'Order deleted successfully');
+            ->with('success', 'Orden borrada con exito');
     }
 
     public function vouchers(Order $order) {
