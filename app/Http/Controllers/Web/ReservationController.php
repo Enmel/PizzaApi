@@ -9,6 +9,11 @@ use Carbon\Carbon;
   
 class ReservationController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+    
     public function index()
     {
         $reservations = Reservation::paginate(15);

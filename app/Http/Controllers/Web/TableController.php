@@ -8,6 +8,11 @@ use Illuminate\Http\Request;
   
 class TableController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+    
     public function index()
     {
         $tables = Table::paginate(15);

@@ -6,7 +6,7 @@
                 <h2>Orden: {{$order->id}}</h2>
             </div>
             <div class="pull-right">
-                <a class="btn btn-primary" href="{{ route('orders.index') }}">Back</a>
+                <a class="btn btn-primary" href="{{ route('orders.index') }}">Atras</a>
             </div>
         </div>
     </div>

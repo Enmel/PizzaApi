@@ -4,7 +4,7 @@
     <div class="row">
         <div class="col-lg-12 margin-tb">
             <div class="pull-right">
-                <a class="btn btn-success" href="{{ route('tables.create') }}"> Create New Table</a>
+                <a class="btn btn-success" href="{{ route('tables.create') }}"> Agregar Mesa</a>
             </div>
         </div>
     </div>
@@ -20,7 +20,7 @@
             <th>No</th>
             <th>Nombre</th>
             <th>Sillas</th>
-            <th width="280px">Action</th>
+            <th width="280px">Accion</th>
         </tr>
         @foreach ($tables as $table)
         <tr>
@@ -30,14 +30,14 @@
             <td>
                 <form action="{{ route('tables.destroy',$table->id) }}" method="POST">
    
-                    <a class="btn btn-info" href="{{ route('tables.show',$table->id) }}">Show</a>
+                    <a class="btn btn-primary" href="{{ route('tables.show',$table->id) }}"><i class="fas fa-eye"></i></a>
     
-                    <a class="btn btn-primary" href="{{ route('tables.edit',$table->id) }}">Edit</a>
+                    <a class="btn btn-info" style="color: #fff !important;" href="{{ route('tables.edit',$table->id) }}"><i class="fas fa-pencil-alt"></i></a>
    
                     @csrf
                     @method('DELETE')
       
-                    <button type="submit" class="btn btn-danger">Delete</button>
+                    <button type="submit" class="btn btn-danger"><i class="fas fa-trash-alt"></i></button>
                 </form>
             </td>
         </tr>

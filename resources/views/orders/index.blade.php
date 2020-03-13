@@ -21,9 +21,9 @@
             <th>Nombre</th>
             <th>Fecha</th>
             <th>Pagado</th>
-            <th>Status</th>
+            <th>Estado</th>
             <th>Total</th>
-            <th width="280px">Action</th>
+            <th width="280px">Accion</th>
         </tr>
         @foreach ($orders as $order)
         <tr>

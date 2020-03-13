@@ -8,6 +8,11 @@ use Illuminate\Http\Request;
 
 class FoodCategoryController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
     public function index()
     {
         $foodcategories = FoodCategory::paginate(15);

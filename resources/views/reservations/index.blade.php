@@ -20,9 +20,9 @@
             <th>Usuario</th>
             <th>Fecha</th>
             <th>Personas</th>
-            <th>Comments</th>
-            <th>Status</th>
-            <th width="280px">Action</th>
+            <th>Comentarios</th>
+            <th>Estado</th>
+            <th width="280px">Accion</th>
         </tr>
         @foreach ($reservations as $reservation)
         <tr>
@@ -42,7 +42,7 @@
                 <form action="{{ route('reservations.destroy', $reservation->id) }}" method="POST"> 
                     @csrf
                     @method('DELETE')
-                    <button type="submit" class="btn btn-danger">Delete</button>
+                    <button type="submit" class="btn btn-danger"><i class="fas fa-trash-alt"></i></button>
                 </form>
             </td>
         </tr>

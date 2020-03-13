@@ -7,7 +7,7 @@
                 <h2>Orden: {{$order->id}}</h2>
             </div>
             <div class="pull-right">
-                <a class="btn btn-primary" href="{{ route('orders.index') }}">Back</a>
+                <a class="btn btn-primary" href="{{ route('orders.index') }}">Atras</a>
             </div>
         </div>
     </div>
@@ -17,7 +17,7 @@
             <th>Orden de Pago</th>
             <th>Referencia</th>
             <th>Banco</th>
-            <th>Status</th>
+            <th>Estado</th>
             <th>Monto</th>
         </tr>
         @foreach ($order->vouchers as $voucher)

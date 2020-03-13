@@ -4,17 +4,17 @@
     <div class="row">
         <div class="col-lg-12 margin-tb">
             <div class="pull-left">
-                <h2>Edit Table</h2>
+                <h2>Editar categoria</h2>
             </div>
             <div class="pull-right">
-                <a class="btn btn-primary" href="{{ route('foodcategories.index') }}"> Back</a>
+                <a class="btn btn-primary" href="{{ route('foodcategories.index') }}"> Atras </a>
             </div>
         </div>
     </div>
    
     @if ($errors->any())
         <div class="alert alert-danger">
-            <strong>Whoops!</strong> There were some problems with your input.<br><br>
+            <strong>Whoops!</strong> Hay algunos problemas con tus entradas.<br><br>
             <ul>
                 @foreach ($errors->all() as $error)
                     <li>{{ $error }}</li>
@@ -45,7 +45,7 @@
             <image src="{{ $foodcategory->getFirstMedia('images')->getFullUrl()}}" width="150">
             <span>Nota: esta es la imagen actual</span>
             <div class="col-xs-12 col-sm-12 col-md-12 text-center">
-              <button type="submit" class="btn btn-primary">Submit</button>
+              <button type="submit" class="btn btn-primary">Guardar</button>
             </div>
         </div>
 	   

@@ -15,6 +15,14 @@ Route::get('/', function () {
     return redirect()->route('tables.index');
 });
 
+Route::post('/logout', function (){
+    Auth::logout();
+    return redirect()->route('login');
+})->name('logout');
+
+Route::get('/login', 'Web\LoginController@login')->name('login');
+Route::post('/auth', 'Web\LoginController@authenticate')->name('auth');
+
 Route::get('/ordersActualDay', 'Web\OrderController@actualDay')->name('orders.actualDay');
 Route::get('/ordersActualMonth', 'Web\OrderController@actualMonth')->name('orders.actualMonth');
 Route::get('/ordersActualYear', 'Web\OrderController@actualYear')->name('orders.actualYear');
